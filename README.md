@@ -10,7 +10,7 @@ We will build a Spring Boot JPA Rest CRUD API for a Course application in that:
 
 - Java 17
 - Spring Boot 3.1.x
-- Spring Modules Covered: Spring Boot Web, Spring Data Jpa, Spring Actuator, OpenAPI
+- Spring Modules Covered: Spring Boot Web, Spring Data Mongodb, Spring Actuator, OpenAPI
 - Database: MongoDB
 - Build Tool: Maven
 
