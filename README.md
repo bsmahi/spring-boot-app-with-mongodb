@@ -473,3 +473,6 @@ Using OpenAPI Documentation, we'll be able to access all the operations, please 
 > http://localhost:8080/swagger-ui/index.html
 
 ![Image](./images/swagger.png "Swagger OpenAPI")
+
+## Prometheus Setup
+- https://www.baeldung.com/spring-boot-prometheus
