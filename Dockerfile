@@ -1,4 +1,4 @@
-FROM maven:3.8.5-openjdk-17
+FROM maven:3.9.11-amazoncorretto-25-alpine AS build
 
 WORKDIR /spring-boot-app-with-mongodb
 COPY . .

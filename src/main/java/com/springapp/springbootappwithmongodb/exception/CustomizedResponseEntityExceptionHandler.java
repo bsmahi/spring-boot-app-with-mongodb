@@ -1,5 +1,6 @@
 package com.springapp.springbootappwithmongodb.exception;
 
+import org.jspecify.annotations.NonNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -13,18 +14,18 @@ import java.time.LocalDateTime;
 public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(Exception.class)
-    public final ResponseEntity<ExceptionResponse> handleAllExceptions(Exception exception,
-                                                                       WebRequest request) {
-        ExceptionResponse exceptionResponse = new ExceptionResponse(LocalDateTime.now(), exception.getMessage(),
+    public final ResponseEntity<@NonNull ExceptionResponse> handleAllExceptions(Exception exception,
+                                                                                WebRequest request) {
+        var exceptionResponse = new ExceptionResponse(LocalDateTime.now(), exception.getMessage(),
                 request.getDescription(false));
 
         return new ResponseEntity<>(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(CourseNotFoundException.class)
-    public final ResponseEntity<ExceptionResponse> handleProductNotFoundException(CourseNotFoundException productNotFoundException,
-                                                                                  WebRequest request) {
-        ExceptionResponse exceptionResponse = new ExceptionResponse(LocalDateTime.now(),
+    public final ResponseEntity<@NonNull ExceptionResponse> handleProductNotFoundException(CourseNotFoundException productNotFoundException,
+                                                                                           WebRequest request) {
+        var exceptionResponse = new ExceptionResponse(LocalDateTime.now(),
                 productNotFoundException.getMessage(),
                 request.getDescription(false));
 

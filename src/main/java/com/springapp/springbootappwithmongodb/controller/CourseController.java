@@ -4,6 +4,7 @@ import com.springapp.springbootappwithmongodb.exception.CourseNotFoundException;
 import com.springapp.springbootappwithmongodb.model.Course;
 import com.springapp.springbootappwithmongodb.service.CourseService;
 import io.swagger.v3.oas.annotations.Operation;
+import org.jspecify.annotations.NonNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +27,7 @@ public class CourseController {
     // http://localhost:8080/api/courses/
     @GetMapping
     @Operation(summary = "Find All Course Details")
-    public ResponseEntity<List<Course>> getAllCourses() {
+    public ResponseEntity<@NonNull List<Course>> getAllCourses() {
         Optional<List<Course>> courses = service.findAll();
 
         return courses.map(courseDetails -> new ResponseEntity<>(courseDetails, HttpStatus.OK))
@@ -36,7 +37,7 @@ public class CourseController {
     // http://localhost:8080/api/courses/course-titles?title=boot
     @GetMapping("/course-titles")
     @Operation(summary = "Find courses By title")
-    public ResponseEntity<List<Course>> getAllCoursesBasedOnTitle(@RequestParam String title) {
+    public ResponseEntity<@NonNull List<Course>> getAllCoursesBasedOnTitle(@RequestParam String title) {
         Optional<List<Course>> courses = service.findByTitleContaining(title);
 
         return courses.map(courseDetails -> new ResponseEntity<>(courseDetails, HttpStatus.OK))
@@ -46,7 +47,7 @@ public class CourseController {
     // http://localhost:8080/api/courses/1
     @GetMapping("/{id}")
     @Operation(summary = "Find Course By Id")
-    public ResponseEntity<Course> getCourseById(@PathVariable("id") String id) {
+    public ResponseEntity<@NonNull Course> getCourseById(@PathVariable("id") String id) {
         Optional<Course> course = service.findById(id);
 
         return course.map(courseOne -> new ResponseEntity<>(courseOne, HttpStatus.OK))
@@ -57,7 +58,7 @@ public class CourseController {
     // http://localhost:8080/api/courses
     @PostMapping
     @Operation(summary = "Create a New Course")
-    public ResponseEntity<Course> createCourse(@RequestBody Course course) {
+    public ResponseEntity<@NonNull Course> createCourse(@RequestBody Course course) {
         Optional<Course> newCourse = service.createCourse(course);
         var location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
@@ -70,7 +71,7 @@ public class CourseController {
 
     @PutMapping("/{id}")
     @Operation(summary = "Update Course By Id")
-    public ResponseEntity<Optional<Course>> updateCourse(@PathVariable("id") String id,
+    public ResponseEntity<@NonNull Optional<Course>> updateCourse(@PathVariable("id") String id,
                                                          @RequestBody Course course) {
         var courseData = service.findById(id);
 
@@ -87,14 +88,14 @@ public class CourseController {
 
     @DeleteMapping
     @Operation(summary = "Delete All Courses")
-    public ResponseEntity<HttpStatus> deleteAllCourses() {
+    public ResponseEntity<@NonNull Void> deleteAllCourses() {
         service.deleteAllCourses();
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Delete Course By Id")
-    public ResponseEntity<HttpStatus> deleteCourseById(@PathVariable("id") String id) {
+    public ResponseEntity<@NonNull Void> deleteCourseById(@PathVariable("id") String id) {
         service.deleteCourseById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
