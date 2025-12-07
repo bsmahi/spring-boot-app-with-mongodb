@@ -13,13 +13,11 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 public class MongoDBTestContainerConfig {
 
     @Container
-    public static MongoDBContainer mongoDBContainer =
-            new MongoDBContainer("mongo:6.0");
+    static MongoDBContainer mongo = new MongoDBContainer("mongo:6.0.6");
 
     @DynamicPropertySource
     static void mongoProperties(DynamicPropertyRegistry registry) {
-        mongoDBContainer.start();
-        registry.add("spring.mongodb.uri", mongoDBContainer::getConnectionString);
+        registry.add("spring.data.mongodb.uri", mongo::getConnectionString);
     }
 }
 
