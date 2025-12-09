@@ -75,11 +75,29 @@
             <artifactId>mongodb</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
+		<dependency>
+			<groupId>org.testcontainers</groupId>
+			<artifactId>grafana</artifactId>
+			<version>1.21.3</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-testcontainers</artifactId>
             <scope>test</scope>
         </dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>org.junit.vintage</groupId>
+					<artifactId>junit-vintage-engine</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
 	</dependencies>
 
     <dependencyManagement>
