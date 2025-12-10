@@ -69,4 +69,17 @@ class CourseRepositoryTest {
         assertThat(found).isPresent();
         assertThat(found.get().getTitle()).isEqualTo("Spring Boot 4");
     }
+
+    @Test
+    void testSaveAndFind_1() {
+        repository.deleteAll();
+
+        Course course = new Course("Spring Boot 4.1", "Test Desc 1", true);
+        Course saved = repository.save(course);
+
+        Optional<Course> found = repository.findById(saved.getId());
+
+        assertThat(found).isPresent();
+        assertThat(found.get().getTitle()).isEqualTo("Spring Boot 4.1");
+    }
 }
