@@ -1,4 +1,5 @@
-FROM maven:3.9.11-amazoncorretto-25-alpine AS build
+# FROM maven:3.9.11-amazoncorretto-25-alpine AS build
+FROM maven:3-eclipse-temurin-21-alpine AS build
 
 WORKDIR /spring-boot-app-with-mongodb
 COPY . .
