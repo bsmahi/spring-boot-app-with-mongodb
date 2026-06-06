@@ -1,4 +1,4 @@
-package com.springapp.springbootappwithmongodb.config;
+package com.springapp.mongodb.config;
 
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;

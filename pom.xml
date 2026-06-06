@@ -5,10 +5,10 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>4.0.0</version>
+		<version>4.0.6</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.springapp</groupId>
+    <groupId>com.springapp</groupId>
 	<artifactId>spring-boot-app-with-mongodb</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>spring-boot-app-with-mongodb</name>

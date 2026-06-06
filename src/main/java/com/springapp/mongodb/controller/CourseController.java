@@ -1,8 +1,8 @@
-package com.springapp.springbootappwithmongodb.controller;
+package com.springapp.mongodb.controller;
 
-import com.springapp.springbootappwithmongodb.exception.CourseNotFoundException;
-import com.springapp.springbootappwithmongodb.model.Course;
-import com.springapp.springbootappwithmongodb.service.CourseService;
+import com.springapp.mongodb.exception.CourseNotFoundException;
+import com.springapp.mongodb.model.Course;
+import com.springapp.mongodb.service.CourseService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.jspecify.annotations.NonNull;
 import org.springframework.http.HttpStatus;

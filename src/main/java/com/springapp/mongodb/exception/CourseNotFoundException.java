@@ -1,4 +1,4 @@
-package com.springapp.springbootappwithmongodb.exception;
+package com.springapp.mongodb.exception;
 
 public class CourseNotFoundException extends RuntimeException {
 

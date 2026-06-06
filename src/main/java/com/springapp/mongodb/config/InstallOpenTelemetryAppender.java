@@ -1,4 +1,4 @@
-package com.springapp.springbootappwithmongodb.config;
+package com.springapp.mongodb.config;
 
 import io.opentelemetry.api.OpenTelemetry;
 import io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender;

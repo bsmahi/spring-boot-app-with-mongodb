@@ -1,6 +1,5 @@
-package com.springapp.springbootappwithmongodb.config;
+package com.springapp.mongodb.config;
 
-import io.micrometer.tracing.TraceContext;
 import io.micrometer.tracing.Tracer;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

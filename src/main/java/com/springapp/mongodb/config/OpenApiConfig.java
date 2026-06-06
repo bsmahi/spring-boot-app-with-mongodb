@@ -1,4 +1,4 @@
-package com.springapp.springbootappwithmongodb.config;
+package com.springapp.mongodb.config;
 
 import io.swagger.v3.oas.models.ExternalDocumentation;
 import io.swagger.v3.oas.models.OpenAPI;

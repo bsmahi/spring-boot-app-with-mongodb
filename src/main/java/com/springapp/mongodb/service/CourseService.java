@@ -1,6 +1,6 @@
-package com.springapp.springbootappwithmongodb.service;
+package com.springapp.mongodb.service;
 
-import com.springapp.springbootappwithmongodb.model.Course;
+import com.springapp.mongodb.model.Course;
 
 import java.util.List;
 import java.util.Optional;

@@ -63,7 +63,7 @@ Our Data model is Course with four fields: id, title, description, published.
 In model package, we define Course class.
 
 ```java
-package com.springapp.springbootappwithmongodb.model;
+package com.springapp.mongodb.model;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -71,59 +71,59 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "courses")
 public class Course {
 
-    @Id
-    private String id;
+  @Id
+  private String id;
 
-    private String title;
-    private String description;
-    private boolean published;
+  private String title;
+  private String description;
+  private boolean published;
 
-    public Course() {
-    }
+  public Course() {
+  }
 
-    public Course(String title, String description, boolean published) {
-        this.title = title;
-        this.description = description;
-        this.published = published;
-    }
+  public Course(String title, String description, boolean published) {
+    this.title = title;
+    this.description = description;
+    this.published = published;
+  }
 
-    public String getId() {
-        return id;
-    }
+  public String getId() {
+    return id;
+  }
 
-    public String getTitle() {
-        return title;
-    }
+  public String getTitle() {
+    return title;
+  }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+  public void setTitle(String title) {
+    this.title = title;
+  }
 
-    public String getDescription() {
-        return description;
-    }
+  public String getDescription() {
+    return description;
+  }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+  public void setDescription(String description) {
+    this.description = description;
+  }
 
-    public boolean isPublished() {
-        return published;
-    }
+  public boolean isPublished() {
+    return published;
+  }
 
-    public void setPublished(boolean published) {
-        this.published = published;
-    }
+  public void setPublished(boolean published) {
+    this.published = published;
+  }
 
-    @Override
-    public String toString() {
-        return "Course{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", published=" + published +
-                '}';
-    }
+  @Override
+  public String toString() {
+    return "Course{" +
+            "id=" + id +
+            ", title='" + title + '\'' +
+            ", description='" + description + '\'' +
+            ", published=" + published +
+            '}';
+  }
 }
 ```
 
@@ -136,9 +136,9 @@ Let's create a repository interface to interact with database operations
 In _repository_ folder, create `CourseRepository` interface that `extends MongoRepository`
 
 ```java
-package com.springapp.springbootappwithmongodb.repository;
+package com.springapp.mongodb.repository;
 
-import com.springapp.springbootappwithmongodb.model.Course;
+import com.springapp.mongodb.model.Course;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
@@ -147,7 +147,7 @@ import java.util.List;
 @Repository
 public interface CourseRepository extends MongoRepository<Course, String> {
 
-    List<Course> findByTitleContaining(String title);
+  List<Course> findByTitleContaining(String title);
 
 }
 
@@ -165,11 +165,11 @@ We can also define the custom methods:
 Let's create CourseController class define the all the endpoints
 
 ```java
-package com.springapp.springbootappwithmongodb.controller;
+package com.springapp.mongodb.controller;
 
-import com.springapp.springbootappwithmongodb.exception.CourseNotFoundException;
-import com.springapp.springbootappwithmongodb.model.Course;
-import com.springapp.springbootappwithmongodb.service.CourseService;
+import com.springapp.mongodb.exception.CourseNotFoundException;
+import com.springapp.mongodb.model.Course;
+import com.springapp.mongodb.service.CourseService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.jspecify.annotations.NonNull;
 import org.springframework.http.HttpStatus;
@@ -185,87 +185,87 @@ import java.util.Optional;
 @RequestMapping("/api/courses")
 public class CourseController {
 
-    private final CourseService service;
+  private final CourseService service;
 
-    public CourseController(CourseService service) {
-        this.service = service;
+  public CourseController(CourseService service) {
+    this.service = service;
+  }
+
+  // http://localhost:8080/api/courses/
+  @GetMapping
+  @Operation(summary = "Find All Course Details")
+  public ResponseEntity<@NonNull List<Course>> getAllCourses() {
+    Optional<List<Course>> courses = service.findAll();
+
+    return courses.map(courseDetails -> new ResponseEntity<>(courseDetails, HttpStatus.OK))
+            .orElseThrow(() -> new CourseNotFoundException("No Courses are available.."));
+  }
+
+  // http://localhost:8080/api/courses/course-titles?title=boot
+  @GetMapping("/course-titles")
+  @Operation(summary = "Find courses By title")
+  public ResponseEntity<@NonNull List<Course>> getAllCoursesBasedOnTitle(@RequestParam String title) {
+    Optional<List<Course>> courses = service.findByTitleContaining(title);
+
+    return courses.map(courseDetails -> new ResponseEntity<>(courseDetails, HttpStatus.OK))
+            .orElseThrow(() -> new CourseNotFoundException("No Courses are available.."));
+  }
+
+  // http://localhost:8080/api/courses/1
+  @GetMapping("/{id}")
+  @Operation(summary = "Find Course By Id")
+  public ResponseEntity<@NonNull Course> getCourseById(@PathVariable("id") String id) {
+    Optional<Course> course = service.findById(id);
+
+    return course.map(courseOne -> new ResponseEntity<>(courseOne, HttpStatus.OK))
+            .orElseThrow(() -> new CourseNotFoundException("No Courses are available.."));
+
+  }
+
+  // http://localhost:8080/api/courses
+  @PostMapping
+  @Operation(summary = "Create a New Course")
+  public ResponseEntity<@NonNull Course> createCourse(@RequestBody Course course) {
+    Optional<Course> newCourse = service.createCourse(course);
+    var location = ServletUriComponentsBuilder.fromCurrentRequest()
+            .path("/{id}")
+            .buildAndExpand(newCourse.get().getId())
+            .toUri();
+
+    return ResponseEntity.created(location)
+            .build();
+  }
+
+  @PutMapping("/{id}")
+  @Operation(summary = "Update Course By Id")
+  public ResponseEntity<@NonNull Optional<Course>> updateCourse(@PathVariable("id") String id,
+                                                                @RequestBody Course course) {
+    var courseData = service.findById(id);
+
+    if (courseData.isPresent()) {
+      Course updateCourse = courseData.get();
+      updateCourse.setTitle(course.getTitle());
+      updateCourse.setDescription(course.getDescription());
+      updateCourse.setPublished(course.isPublished());
+      return new ResponseEntity<>(service.createCourse(updateCourse), HttpStatus.OK);
+    } else {
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+  }
 
-    // http://localhost:8080/api/courses/
-    @GetMapping
-    @Operation(summary = "Find All Course Details")
-    public ResponseEntity<@NonNull List<Course>> getAllCourses() {
-        Optional<List<Course>> courses = service.findAll();
+  @DeleteMapping
+  @Operation(summary = "Delete All Courses")
+  public ResponseEntity<@NonNull Void> deleteAllCourses() {
+    service.deleteAllCourses();
+    return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+  }
 
-        return courses.map(courseDetails -> new ResponseEntity<>(courseDetails, HttpStatus.OK))
-                .orElseThrow(() -> new CourseNotFoundException("No Courses are available.."));
-    }
-
-    // http://localhost:8080/api/courses/course-titles?title=boot
-    @GetMapping("/course-titles")
-    @Operation(summary = "Find courses By title")
-    public ResponseEntity<@NonNull List<Course>> getAllCoursesBasedOnTitle(@RequestParam String title) {
-        Optional<List<Course>> courses = service.findByTitleContaining(title);
-
-        return courses.map(courseDetails -> new ResponseEntity<>(courseDetails, HttpStatus.OK))
-                .orElseThrow(() -> new CourseNotFoundException("No Courses are available.."));
-    }
-
-    // http://localhost:8080/api/courses/1
-    @GetMapping("/{id}")
-    @Operation(summary = "Find Course By Id")
-    public ResponseEntity<@NonNull Course> getCourseById(@PathVariable("id") String id) {
-        Optional<Course> course = service.findById(id);
-
-        return course.map(courseOne -> new ResponseEntity<>(courseOne, HttpStatus.OK))
-                .orElseThrow(() -> new CourseNotFoundException("No Courses are available.."));
-
-    }
-
-    // http://localhost:8080/api/courses
-    @PostMapping
-    @Operation(summary = "Create a New Course")
-    public ResponseEntity<@NonNull Course> createCourse(@RequestBody Course course) {
-        Optional<Course> newCourse = service.createCourse(course);
-        var location = ServletUriComponentsBuilder.fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(newCourse.get().getId())
-                .toUri();
-
-        return ResponseEntity.created(location)
-                .build();
-    }
-
-    @PutMapping("/{id}")
-    @Operation(summary = "Update Course By Id")
-    public ResponseEntity<@NonNull Optional<Course>> updateCourse(@PathVariable("id") String id,
-                                                                  @RequestBody Course course) {
-        var courseData = service.findById(id);
-
-        if (courseData.isPresent()) {
-            Course updateCourse = courseData.get();
-            updateCourse.setTitle(course.getTitle());
-            updateCourse.setDescription(course.getDescription());
-            updateCourse.setPublished(course.isPublished());
-            return new ResponseEntity<>(service.createCourse(updateCourse), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
-
-    @DeleteMapping
-    @Operation(summary = "Delete All Courses")
-    public ResponseEntity<@NonNull Void> deleteAllCourses() {
-        service.deleteAllCourses();
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
-
-    @DeleteMapping("/{id}")
-    @Operation(summary = "Delete Course By Id")
-    public ResponseEntity<@NonNull Void> deleteCourseById(@PathVariable("id") String id) {
-        service.deleteCourseById(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
+  @DeleteMapping("/{id}")
+  @Operation(summary = "Delete Course By Id")
+  public ResponseEntity<@NonNull Void> deleteCourseById(@PathVariable("id") String id) {
+    service.deleteCourseById(id);
+    return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+  }
 
 }
 ```

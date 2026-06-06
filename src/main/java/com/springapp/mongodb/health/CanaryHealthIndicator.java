@@ -1,4 +1,4 @@
-package com.springapp.springbootappwithmongodb.health;
+package com.springapp.mongodb.health;
 
 import org.jspecify.annotations.Nullable;
 import org.springframework.boot.health.contributor.Health;

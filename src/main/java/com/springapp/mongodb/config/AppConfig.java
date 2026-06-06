@@ -1,4 +1,4 @@
-package com.springapp.springbootappwithmongodb.config;
+package com.springapp.mongodb.config;
 
 import io.micrometer.core.instrument.Tags;
 import io.micrometer.core.instrument.binder.jvm.ClassLoaderMetrics;

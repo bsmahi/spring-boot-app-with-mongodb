@@ -1,6 +1,6 @@
-package com.springapp.springbootappwithmongodb.repository;
+package com.springapp.mongodb.repository;
 
-import com.springapp.springbootappwithmongodb.model.Course;
+import com.springapp.mongodb.model.Course;
 import org.jspecify.annotations.NonNull;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;

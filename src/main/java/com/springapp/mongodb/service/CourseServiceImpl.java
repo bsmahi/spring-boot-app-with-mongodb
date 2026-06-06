@@ -1,7 +1,7 @@
-package com.springapp.springbootappwithmongodb.service;
+package com.springapp.mongodb.service;
 
-import com.springapp.springbootappwithmongodb.model.Course;
-import com.springapp.springbootappwithmongodb.repository.CourseRepository;
+import com.springapp.mongodb.model.Course;
+import com.springapp.mongodb.repository.CourseRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

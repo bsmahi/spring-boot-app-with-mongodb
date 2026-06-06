@@ -1,7 +1,7 @@
-package com.springapp.springbootappwithmongodb.repository;
+package com.springapp.mongodb.repository;
 
-import com.springapp.springbootappwithmongodb.config.MongoDBTestContainerConfig;
-import com.springapp.springbootappwithmongodb.model.Course;
+import com.springapp.mongodb.config.MongoDBTestContainerConfig;
+import com.springapp.mongodb.model.Course;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

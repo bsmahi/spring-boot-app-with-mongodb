@@ -1,4 +1,4 @@
-package com.springapp.springbootappwithmongodb.exception;
+package com.springapp.mongodb.exception;
 
 import org.jspecify.annotations.NonNull;
 import org.springframework.http.HttpStatus;

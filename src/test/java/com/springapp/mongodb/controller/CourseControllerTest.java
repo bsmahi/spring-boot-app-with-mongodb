@@ -1,8 +1,8 @@
-package com.springapp.springbootappwithmongodb.controller;
+package com.springapp.mongodb.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.springapp.springbootappwithmongodb.config.MongoDBTestContainerConfig;
-import com.springapp.springbootappwithmongodb.model.Course;
+import com.springapp.mongodb.config.MongoDBTestContainerConfig;
+import com.springapp.mongodb.model.Course;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,7 +11,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
-import org.testcontainers.junit.jupiter.Testcontainers;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
